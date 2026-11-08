@@ -115,7 +115,11 @@ async fn get_todo(
     Path(id): Path<String>,
 ) -> Result<Json<TodoItem>, StatusCode> {
     let guard = state.todos.read().unwrap();
-    guard.get(&id).cloned().map(Json).ok_or(StatusCode::NOT_FOUND)
+    guard
+        .get(&id)
+        .cloned()
+        .map(Json)
+        .ok_or(StatusCode::NOT_FOUND)
 }
 
 async fn create_todo(
@@ -188,161 +192,172 @@ async fn health_check() -> impl IntoResponse {
 pub async fn run_mcp(state: AppState) {
     use std::io::{self, BufRead};
     let stdin = io::stdin();
-    for line in stdin.lock().lines() {
-        if let Ok(line_str) = line {
-            if line_str.trim().is_empty() {
-                continue;
-            }
-            if let Ok(val) = serde_json::from_str::<serde_json::Value>(&line_str) {
-                let id = val.get("id").cloned();
-                let method = val.get("method").and_then(|m| m.as_str()).unwrap_or("");
+    for line_str in stdin.lock().lines().map_while(Result::ok) {
+        if line_str.trim().is_empty() {
+            continue;
+        }
+        if let Ok(val) = serde_json::from_str::<serde_json::Value>(&line_str) {
+            let id = val.get("id").cloned();
+            let method = val.get("method").and_then(|m| m.as_str()).unwrap_or("");
 
-                match method {
-                    "tools/list" => {
-                        let resp = serde_json::json!({
-                            "jsonrpc": "2.0",
-                            "id": id,
-                            "result": {
-                                "tools": [
-                                    {
-                                        "name": "omni_todos_list",
-                                        "description": "List all sovereign todos from omni-todos / todos.vaked.dev",
-                                        "inputSchema": {
-                                            "type": "object",
-                                            "properties": {
-                                                "status": { "type": "string", "enum": ["Open", "InProgress", "Merged", "Done", "Skipped"] }
-                                            }
-                                        }
-                                    },
-                                    {
-                                        "name": "omni_todos_create",
-                                        "description": "Create a new sovereign todo item",
-                                        "inputSchema": {
-                                            "type": "object",
-                                            "properties": {
-                                                "title": { "type": "string" },
-                                                "repo": { "type": "string" },
-                                                "kind": { "type": "string", "enum": ["PR", "Issue", "WIP", "Task"] },
-                                                "score": { "type": "number" },
-                                                "url": { "type": "string" }
-                                            },
-                                            "required": ["title"]
-                                        }
-                                    },
-                                    {
-                                        "name": "omni_todos_resolve",
-                                        "description": "Mark a todo item as Merged or Done",
-                                        "inputSchema": {
-                                            "type": "object",
-                                            "properties": {
-                                                "id": { "type": "string" },
-                                                "status": { "type": "string", "enum": ["Merged", "Done", "Skipped"] }
-                                            },
-                                            "required": ["id"]
+            match method {
+                "tools/list" => {
+                    let resp = serde_json::json!({
+                        "jsonrpc": "2.0",
+                        "id": id,
+                        "result": {
+                            "tools": [
+                                {
+                                    "name": "omni_todos_list",
+                                    "description": "List all sovereign todos from omni-todos / todos.vaked.dev",
+                                    "inputSchema": {
+                                        "type": "object",
+                                        "properties": {
+                                            "status": { "type": "string", "enum": ["Open", "InProgress", "Merged", "Done", "Skipped"] }
                                         }
                                     }
-                                ]
-                            }
-                        });
-                        println!("{}", resp);
-                    }
-                    "tools/call" => {
-                        let params = val.get("params").cloned().unwrap_or(serde_json::Value::Null);
-                        let tool_name = params.get("name").and_then(|n| n.as_str()).unwrap_or("");
-                        let args = params.get("arguments").cloned().unwrap_or(serde_json::Value::Null);
-
-                        let result = match tool_name {
-                            "omni_todos_list" => {
-                                let guard = state.todos.read().unwrap();
-                                let list: Vec<TodoItem> = guard.values().cloned().collect();
-                                serde_json::json!({
-                                    "content": [{
-                                        "type": "text",
-                                        "text": serde_json::to_string_pretty(&list).unwrap_or_default()
-                                    }]
-                                })
-                            }
-                            "omni_todos_create" => {
-                                let title = args.get("title").and_then(|t| t.as_str()).unwrap_or("Untitled").to_string();
-                                let repo = args.get("repo").and_then(|r| r.as_str()).map(String::from);
-                                let score = args.get("score").and_then(|s| s.as_f64());
-                                let url = args.get("url").and_then(|u| u.as_str()).map(String::from);
-                                let now = chrono::Utc::now().to_rfc3339();
-                                let new_id = uuid::Uuid::new_v4().to_string();
-
-                                let item = TodoItem {
-                                    id: new_id.clone(),
-                                    title,
-                                    kind: TodoKind::Task,
-                                    status: TodoStatus::Open,
-                                    repo,
-                                    score,
-                                    url,
-                                    metadata: HashMap::new(),
-                                    created_at: now.clone(),
-                                    updated_at: now,
-                                };
+                                },
                                 {
-                                    let mut guard = state.todos.write().unwrap();
-                                    guard.insert(new_id, item.clone());
+                                    "name": "omni_todos_create",
+                                    "description": "Create a new sovereign todo item",
+                                    "inputSchema": {
+                                        "type": "object",
+                                        "properties": {
+                                            "title": { "type": "string" },
+                                            "repo": { "type": "string" },
+                                            "kind": { "type": "string", "enum": ["PR", "Issue", "WIP", "Task"] },
+                                            "score": { "type": "number" },
+                                            "url": { "type": "string" }
+                                        },
+                                        "required": ["title"]
+                                    }
+                                },
+                                {
+                                    "name": "omni_todos_resolve",
+                                    "description": "Mark a todo item as Merged or Done",
+                                    "inputSchema": {
+                                        "type": "object",
+                                        "properties": {
+                                            "id": { "type": "string" },
+                                            "status": { "type": "string", "enum": ["Merged", "Done", "Skipped"] }
+                                        },
+                                        "required": ["id"]
+                                    }
                                 }
+                            ]
+                        }
+                    });
+                    println!("{}", resp);
+                }
+                "tools/call" => {
+                    let params = val
+                        .get("params")
+                        .cloned()
+                        .unwrap_or(serde_json::Value::Null);
+                    let tool_name = params.get("name").and_then(|n| n.as_str()).unwrap_or("");
+                    let args = params
+                        .get("arguments")
+                        .cloned()
+                        .unwrap_or(serde_json::Value::Null);
+
+                    let result = match tool_name {
+                        "omni_todos_list" => {
+                            let guard = state.todos.read().unwrap();
+                            let list: Vec<TodoItem> = guard.values().cloned().collect();
+                            serde_json::json!({
+                                "content": [{
+                                    "type": "text",
+                                    "text": serde_json::to_string_pretty(&list).unwrap_or_default()
+                                }]
+                            })
+                        }
+                        "omni_todos_create" => {
+                            let title = args
+                                .get("title")
+                                .and_then(|t| t.as_str())
+                                .unwrap_or("Untitled")
+                                .to_string();
+                            let repo = args.get("repo").and_then(|r| r.as_str()).map(String::from);
+                            let score = args.get("score").and_then(|s| s.as_f64());
+                            let url = args.get("url").and_then(|u| u.as_str()).map(String::from);
+                            let now = chrono::Utc::now().to_rfc3339();
+                            let new_id = uuid::Uuid::new_v4().to_string();
+
+                            let item = TodoItem {
+                                id: new_id.clone(),
+                                title,
+                                kind: TodoKind::Task,
+                                status: TodoStatus::Open,
+                                repo,
+                                score,
+                                url,
+                                metadata: HashMap::new(),
+                                created_at: now.clone(),
+                                updated_at: now,
+                            };
+                            {
+                                let mut guard = state.todos.write().unwrap();
+                                guard.insert(new_id, item.clone());
+                            }
+                            state.persist();
+                            serde_json::json!({
+                                "content": [{
+                                    "type": "text",
+                                    "text": format!("Created todo: {}", item.id)
+                                }]
+                            })
+                        }
+                        "omni_todos_resolve" => {
+                            let target_id = args.get("id").and_then(|i| i.as_str()).unwrap_or("");
+                            let target_status = args
+                                .get("status")
+                                .and_then(|s| s.as_str())
+                                .unwrap_or("Done");
+                            let mut guard = state.todos.write().unwrap();
+                            if let Some(item) = guard.get_mut(target_id) {
+                                item.status = match target_status {
+                                    "Merged" => TodoStatus::Merged,
+                                    "Skipped" => TodoStatus::Skipped,
+                                    _ => TodoStatus::Done,
+                                };
+                                item.updated_at = chrono::Utc::now().to_rfc3339();
+                                drop(guard);
                                 state.persist();
                                 serde_json::json!({
                                     "content": [{
                                         "type": "text",
-                                        "text": format!("Created todo: {}", item.id)
+                                        "text": format!("Todo {} marked as {}", target_id, target_status)
                                     }]
                                 })
-                            }
-                            "omni_todos_resolve" => {
-                                let target_id = args.get("id").and_then(|i| i.as_str()).unwrap_or("");
-                                let target_status = args.get("status").and_then(|s| s.as_str()).unwrap_or("Done");
-                                let mut guard = state.todos.write().unwrap();
-                                if let Some(item) = guard.get_mut(target_id) {
-                                    item.status = match target_status {
-                                        "Merged" => TodoStatus::Merged,
-                                        "Skipped" => TodoStatus::Skipped,
-                                        _ => TodoStatus::Done,
-                                    };
-                                    item.updated_at = chrono::Utc::now().to_rfc3339();
-                                    drop(guard);
-                                    state.persist();
-                                    serde_json::json!({
-                                        "content": [{
-                                            "type": "text",
-                                            "text": format!("Todo {} marked as {}", target_id, target_status)
-                                        }]
-                                    })
-                                } else {
-                                    serde_json::json!({
-                                        "isError": true,
-                                        "content": [{ "type": "text", "text": "Todo ID not found" }]
-                                    })
-                                }
-                            }
-                            _ => {
+                            } else {
                                 serde_json::json!({
                                     "isError": true,
-                                    "content": [{ "type": "text", "text": format!("Unknown tool: {}", tool_name) }]
+                                    "content": [{ "type": "text", "text": "Todo ID not found" }]
                                 })
                             }
-                        };
+                        }
+                        _ => {
+                            serde_json::json!({
+                                "isError": true,
+                                "content": [{ "type": "text", "text": format!("Unknown tool: {}", tool_name) }]
+                            })
+                        }
+                    };
 
-                        let resp = serde_json::json!({
-                            "jsonrpc": "2.0",
-                            "id": id,
-                            "result": result
-                        });
-                        println!("{}", resp);
-                    }
-                    _ => {
-                        let resp = serde_json::json!({
-                            "jsonrpc": "2.0",
-                            "id": id,
-                            "result": {}
-                        });
-                        println!("{}", resp);
-                    }
+                    let resp = serde_json::json!({
+                        "jsonrpc": "2.0",
+                        "id": id,
+                        "result": result
+                    });
+                    println!("{}", resp);
+                }
+                _ => {
+                    let resp = serde_json::json!({
+                        "jsonrpc": "2.0",
+                        "id": id,
+                        "result": {}
+                    });
+                    println!("{}", resp);
                 }
             }
         }
@@ -386,10 +401,18 @@ async fn main() -> Result<(), Box<dyn std::error::Error>> {
                 .route("/health", get(health_check))
                 .route("/api/todos", get(list_todos).post(create_todo))
                 .route("/api/todos/{id}", get(get_todo).patch(update_todo))
-                .layer(CorsLayer::new().allow_origin(Any).allow_methods(Any).allow_headers(Any))
+                .layer(
+                    CorsLayer::new()
+                        .allow_origin(Any)
+                        .allow_methods(Any)
+                        .allow_headers(Any),
+                )
                 .with_state(state);
 
-            println!("[*] omni-todos HTTP API server listening on http://{}", bind);
+            println!(
+                "[*] omni-todos HTTP API server listening on http://{}",
+                bind
+            );
             let listener = tokio::net::TcpListener::bind(&bind).await?;
             axum::serve(listener, app).await?;
         }
@@ -399,8 +422,16 @@ async fn main() -> Result<(), Box<dyn std::error::Error>> {
         Commands::List => {
             let guard = state.todos.read().unwrap();
             let mut list: Vec<TodoItem> = guard.values().cloned().collect();
-            list.sort_by(|a, b| b.score.unwrap_or(0.0).partial_cmp(&a.score.unwrap_or(0.0)).unwrap_or(std::cmp::Ordering::Equal));
-            println!("{:<38} {:<10} {:<10} {:<6} {}", "ID", "KIND", "STATUS", "SCORE", "TITLE");
+            list.sort_by(|a, b| {
+                b.score
+                    .unwrap_or(0.0)
+                    .partial_cmp(&a.score.unwrap_or(0.0))
+                    .unwrap_or(std::cmp::Ordering::Equal)
+            });
+            println!(
+                "{:<38} {:<10} {:<10} {:<6} TITLE",
+                "ID", "KIND", "STATUS", "SCORE"
+            );
             println!("{}", "-".repeat(90));
             for item in list {
                 println!(
