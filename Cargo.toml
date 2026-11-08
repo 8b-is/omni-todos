@@ -1,0 +1,20 @@
+[package]
+name = "omni-todos"
+version = "0.1.0"
+edition = "2021"
+authors = ["Peter Lodri <peter@8b.is>"]
+description = "Sovereign Ultra-Evolved TODO engine, REST API, CLI, and smart-tree MCP integration for todos.vaked.dev"
+license = "MIT OR Apache-2.0"
+repository = "https://github.com/8b-is/omni-todos"
+
+[dependencies]
+tokio = { version = "1.43", features = ["full"] }
+axum = { version = "0.8", features = ["json", "tokio"] }
+serde = { version = "1.0", features = ["derive"] }
+serde_json = { version = "1.0" }
+tower-http = { version = "0.6", features = ["cors", "trace"] }
+clap = { version = "4.5", features = ["derive"] }
+chrono = { version = "0.4", features = ["serde"] }
+uuid = { version = "1.11", features = ["v4", "serde"] }
+tracing = "0.1"
+tracing-subscriber = "0.3"

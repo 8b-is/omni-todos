@@ -1,0 +1,14 @@
+/Users/peterlodri/workspace/peterlodri-sec/omni-todos/target/release/deps/serde-c4e82213ef937023.d: /Users/peterlodri/.cargo/registry/src/index.crates.io-1949cf8c6b5b557f/serde-1.0.229/src/lib.rs /Users/peterlodri/.cargo/registry/src/index.crates.io-1949cf8c6b5b557f/serde-1.0.229/src/integer128.rs /Users/peterlodri/.cargo/registry/src/index.crates.io-1949cf8c6b5b557f/serde-1.0.229/src/private/mod.rs /Users/peterlodri/.cargo/registry/src/index.crates.io-1949cf8c6b5b557f/serde-1.0.229/src/private/de.rs /Users/peterlodri/.cargo/registry/src/index.crates.io-1949cf8c6b5b557f/serde-1.0.229/src/private/ser.rs /Users/peterlodri/workspace/peterlodri-sec/omni-todos/target/release/build/serde-f5ac3cf2b0c77037/out/private.rs
+
+/Users/peterlodri/workspace/peterlodri-sec/omni-todos/target/release/deps/libserde-c4e82213ef937023.rlib: /Users/peterlodri/.cargo/registry/src/index.crates.io-1949cf8c6b5b557f/serde-1.0.229/src/lib.rs /Users/peterlodri/.cargo/registry/src/index.crates.io-1949cf8c6b5b557f/serde-1.0.229/src/integer128.rs /Users/peterlodri/.cargo/registry/src/index.crates.io-1949cf8c6b5b557f/serde-1.0.229/src/private/mod.rs /Users/peterlodri/.cargo/registry/src/index.crates.io-1949cf8c6b5b557f/serde-1.0.229/src/private/de.rs /Users/peterlodri/.cargo/registry/src/index.crates.io-1949cf8c6b5b557f/serde-1.0.229/src/private/ser.rs /Users/peterlodri/workspace/peterlodri-sec/omni-todos/target/release/build/serde-f5ac3cf2b0c77037/out/private.rs
+
+/Users/peterlodri/workspace/peterlodri-sec/omni-todos/target/release/deps/libserde-c4e82213ef937023.rmeta: /Users/peterlodri/.cargo/registry/src/index.crates.io-1949cf8c6b5b557f/serde-1.0.229/src/lib.rs /Users/peterlodri/.cargo/registry/src/index.crates.io-1949cf8c6b5b557f/serde-1.0.229/src/integer128.rs /Users/peterlodri/.cargo/registry/src/index.crates.io-1949cf8c6b5b557f/serde-1.0.229/src/private/mod.rs /Users/peterlodri/.cargo/registry/src/index.crates.io-1949cf8c6b5b557f/serde-1.0.229/src/private/de.rs /Users/peterlodri/.cargo/registry/src/index.crates.io-1949cf8c6b5b557f/serde-1.0.229/src/private/ser.rs /Users/peterlodri/workspace/peterlodri-sec/omni-todos/target/release/build/serde-f5ac3cf2b0c77037/out/private.rs
+
+/Users/peterlodri/.cargo/registry/src/index.crates.io-1949cf8c6b5b557f/serde-1.0.229/src/lib.rs:
+/Users/peterlodri/.cargo/registry/src/index.crates.io-1949cf8c6b5b557f/serde-1.0.229/src/integer128.rs:
+/Users/peterlodri/.cargo/registry/src/index.crates.io-1949cf8c6b5b557f/serde-1.0.229/src/private/mod.rs:
+/Users/peterlodri/.cargo/registry/src/index.crates.io-1949cf8c6b5b557f/serde-1.0.229/src/private/de.rs:
+/Users/peterlodri/.cargo/registry/src/index.crates.io-1949cf8c6b5b557f/serde-1.0.229/src/private/ser.rs:
+/Users/peterlodri/workspace/peterlodri-sec/omni-todos/target/release/build/serde-f5ac3cf2b0c77037/out/private.rs:
+
+# env-dep:OUT_DIR=/Users/peterlodri/workspace/peterlodri-sec/omni-todos/target/release/build/serde-f5ac3cf2b0c77037/out
