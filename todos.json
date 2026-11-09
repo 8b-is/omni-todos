@@ -66,6 +66,24 @@
     "created_at": "2026-11-09T00:54:50.294531+00:00",
     "updated_at": "2026-11-09T00:54:52.982159+00:00"
   },
+  "59f6a1b7-8d51-48a0-8711-50941eacdd09": {
+    "id": "59f6a1b7-8d51-48a0-8711-50941eacdd09",
+    "title": "Implement /arm-cortex-expert E2E (arm_cortex_m7_driver + arm_cortex_m7_spark): MMIO DMB/DSB barriers, W1C status, 32B DTCM DMA coherency, lock-free AtomicIsrSpscQueue, LPSPI4 WHO_AM_I, HardFault CFSR decoder",
+    "kind": "Task",
+    "status": "Done",
+    "repo": "8b-is/felix",
+    "score": 5.0,
+    "url": "https://github.com/8b-is/felix/commit/f4b047f",
+    "metadata": {
+      "dma_speedup_pq": "4/1",
+      "bonobo_resonance_pq": "3/2",
+      "spark_packages_pq": "34/34",
+      "felix_commit": "f4b047f",
+      "felix_codegen_commit": "9c06d53"
+    },
+    "created_at": "2026-11-09T14:59:13.392035+00:00",
+    "updated_at": "2026-11-09T14:59:13.424320+00:00"
+  },
   "4573c234-21c8-470b-8566-ef768cb5c99b": {
     "id": "4573c234-21c8-470b-8566-ef768cb5c99b",
     "title": "8b-is-GOD(S)-OF-LLL v0.3.1: 22-Epoch (88 Rollout) 6-Model Co-Training & Integral LLL Lattice Reduction (delta=3/4, 115/115 SPARK)",
