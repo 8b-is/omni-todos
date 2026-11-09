@@ -1,4 +1,56 @@
 {
+  "46236272-8c2d-4725-9b64-78d6f8a027f5": {
+    "id": "46236272-8c2d-4725-9b64-78d6f8a027f5",
+    "title": "8b-agy v0.3.0 ROBV-C Architecture + Qwen4-Exp-8B SOTA + kompress-super-ultra (:8799) Unified",
+    "kind": "Task",
+    "status": "Done",
+    "repo": null,
+    "score": null,
+    "url": null,
+    "metadata": {
+      "bonobo_harmonic_pq": "3/2",
+      "swe_bench_pq": "447/500",
+      "math500_pq": "493/500",
+      "aime_pq": "29/30",
+      "cluster_mask": "0b111111",
+      "spark_proved": "113/113",
+      "pqt_compression_pq": "375/1"
+    },
+    "created_at": "2026-11-09T03:13:34.304944+00:00",
+    "updated_at": "2026-11-09T07:47:17.240537+00:00"
+  },
+  "00000000-0000-0000-0000-000000000003": {
+    "id": "00000000-0000-0000-0000-000000000003",
+    "title": "fix(dogfeed): E2E kompress-ultra wiring, local/ Ollama routing & dogfeed.nu NDJSON push",
+    "kind": "PR",
+    "status": "Merged",
+    "repo": "8b-is/ultrameshai",
+    "score": 4.11,
+    "url": "https://github.com/8b-is/ultrameshai/pull/6",
+    "metadata": {
+      "branch": "main"
+    },
+    "created_at": "2026-11-08T11:00:00Z",
+    "updated_at": "2026-11-08T11:00:00Z"
+  },
+  "a97c2113-a283-4d38-bebf-a4b167f831d0": {
+    "id": "a97c2113-a283-4d38-bebf-a4b167f831d0",
+    "title": "Scaffold kompress-super-ultra v0.2.0 E2E (/systems-programming-rust-project): 167,466 folds/sec (5.97us/op), exact p/q + bps, E2E TCP API tests",
+    "kind": "Task",
+    "status": "Done",
+    "repo": null,
+    "score": 5.0,
+    "url": null,
+    "metadata": {
+      "speedup_pq": "234/1",
+      "bonobo_resonance_pq": "3/2",
+      "commit": "8e7e993",
+      "latency_ns": "5972",
+      "ops_per_sec": "167466"
+    },
+    "created_at": "2026-11-09T11:55:45.848524+00:00",
+    "updated_at": "2026-11-09T12:59:32.423516+00:00"
+  },
   "e84df86e-b96c-4802-b2df-993a6f5bdf11": {
     "id": "e84df86e-b96c-4802-b2df-993a6f5bdf11",
     "title": "Kompress-Super-Ultra CORE repository published & CI deployed",
@@ -14,25 +66,25 @@
     "created_at": "2026-11-09T00:54:50.294531+00:00",
     "updated_at": "2026-11-09T00:54:52.982159+00:00"
   },
-  "46236272-8c2d-4725-9b64-78d6f8a027f5": {
-    "id": "46236272-8c2d-4725-9b64-78d6f8a027f5",
-    "title": "8b-agy v0.3.0 ROBV-C Architecture + Qwen4-Exp-8B SOTA + kompress-super-ultra (:8799) Unified",
+  "4573c234-21c8-470b-8566-ef768cb5c99b": {
+    "id": "4573c234-21c8-470b-8566-ef768cb5c99b",
+    "title": "8b-is-GOD(S)-OF-LLL v0.3.1: 22-Epoch (88 Rollout) 6-Model Co-Training & Integral LLL Lattice Reduction (delta=3/4, 115/115 SPARK)",
     "kind": "Task",
-    "status": "Done",
+    "status": "Open",
     "repo": null,
     "score": null,
     "url": null,
     "metadata": {
-      "bonobo_harmonic_pq": "3/2",
-      "pqt_compression_pq": "375/1",
-      "spark_proved": "113/113",
-      "swe_bench_pq": "447/500",
-      "math500_pq": "493/500",
-      "aime_pq": "29/30",
-      "cluster_mask": "0b111111"
+      "lovasz_delta_pq": "3/4",
+      "final_reward_pq": "8189/8192",
+      "resonance_pq": "3/2",
+      "final_mopd2_loss_q15": "12/32768",
+      "spark_checks": "115/115",
+      "suite": "8b-is-GOD(S)-OF-LLL-v0.3.1",
+      "hf_run_id": "42581640796"
     },
-    "created_at": "2026-11-09T03:13:34.304944+00:00",
-    "updated_at": "2026-11-09T07:47:17.240537+00:00"
+    "created_at": "2026-11-09T07:51:37.669174+00:00",
+    "updated_at": "2026-11-09T07:51:37.669174+00:00"
   },
   "00000000-0000-0000-0000-000000000002": {
     "id": "00000000-0000-0000-0000-000000000002",
@@ -48,6 +100,39 @@
     "created_at": "2026-11-08T11:00:00Z",
     "updated_at": "2026-11-08T11:00:00Z"
   },
+  "d30cffac-a7be-44df-92a0-661ac0e06572": {
+    "id": "d30cffac-a7be-44df-92a0-661ac0e06572",
+    "title": "Implement /rust-async-patterns across smart-tree (AsyncMemnetCoordinator) and memnet (async_mesh): JoinSet, Semaphore, RwLock, mpsc/broadcast/oneshot/watch, CancellationToken, E2E tests",
+    "kind": "Task",
+    "status": "Done",
+    "repo": null,
+    "score": 5.0,
+    "url": null,
+    "metadata": {
+      "memnet_commits": "8b6d26b,41ad427",
+      "patterns_implemented": "7/7",
+      "smart_tree_commits": "556fe79,88cfeb5",
+      "tests_passed_pq": "66/66"
+    },
+    "created_at": "2026-11-09T12:48:11.476571+00:00",
+    "updated_at": "2026-11-09T12:59:32.441212+00:00"
+  },
+  "2d9ff712-09bd-4a77-9901-c83269f3164b": {
+    "id": "2d9ff712-09bd-4a77-9901-c83269f3164b",
+    "title": "Autonomous PR sweep across 8b-is/8b-is-engine, rustract, rap, bhava (10 merged, 3 pruned)",
+    "kind": "Task",
+    "status": "Done",
+    "repo": "8b-is/8b-is-engine",
+    "score": 4.5,
+    "url": "https://github.com/8b-is/8b-is-engine",
+    "metadata": {
+      "p_over_q": "13/1",
+      "prs_resolved": "13",
+      "status": "Complete"
+    },
+    "created_at": "2026-11-09T07:48:12.982638+00:00",
+    "updated_at": "2026-11-09T07:48:15.462291+00:00"
+  },
   "00000000-0000-0000-0000-000000000001": {
     "id": "00000000-0000-0000-0000-000000000001",
     "title": "Cognitive State Machine (Sentinel)",
@@ -58,20 +143,6 @@
     "url": "https://todos.vaked.dev",
     "metadata": {
       "anchor": "vaked-sentinel"
-    },
-    "created_at": "2026-11-08T11:00:00Z",
-    "updated_at": "2026-11-08T11:00:00Z"
-  },
-  "00000000-0000-0000-0000-000000000003": {
-    "id": "00000000-0000-0000-0000-000000000003",
-    "title": "fix(dogfeed): E2E kompress-ultra wiring, local/ Ollama routing & dogfeed.nu NDJSON push",
-    "kind": "PR",
-    "status": "Merged",
-    "repo": "8b-is/ultrameshai",
-    "score": 4.11,
-    "url": "https://github.com/8b-is/ultrameshai/pull/6",
-    "metadata": {
-      "branch": "main"
     },
     "created_at": "2026-11-08T11:00:00Z",
     "updated_at": "2026-11-08T11:00:00Z"
